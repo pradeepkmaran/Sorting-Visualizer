@@ -1,0 +1,24 @@
+done mergesort
+done insertionsort
+done bubblesort
+done quicksort
+
+heapsort
+selection sort
+radixsort 
+shellsort
+parellelised pairwise sorting (beautiful sorting)
+
+randomsort?
+bozosort?
+comb sort?
+wiki sort / block merge sort
+binary insertion sort
+bitonic sort
+quicksort with 2 pivots?
+std::sort (gcc)
+std::stable_sort (gcc)
+
+
+comparisons
+array accesses
