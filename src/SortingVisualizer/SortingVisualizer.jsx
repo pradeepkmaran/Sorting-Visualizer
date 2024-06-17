@@ -63,9 +63,6 @@ export class SortingVisualizer extends React.Component {
 
     quickSort() {
         const animations = getQuickSortAnimations(this.state.array)
-        console.log(this.state.array);
-        console.log(animations);
-
         for(let i=0;i<animations.length;i++) {
             const animation = animations[i];
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -101,7 +98,6 @@ export class SortingVisualizer extends React.Component {
 
     heapSort() {
         const animations = getHeapSortAnimations(this.state.array);
-        console.log(animations);
         for(let i=0;i<animations.length;i++) {
             const animation = animations[i];
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -136,11 +132,7 @@ export class SortingVisualizer extends React.Component {
     }
 
     insertionSort() {
-        console.log(this.state.array);
-        const animations = getInsertionSortAnimations(this.state.array)
-        console.log(this.state.array);
-        console.log(animations);
-
+        const animations = getInsertionSortAnimations(this.state.array);
         for(let i=0;i<animations.length;i++) {
             const animation = animations[i];
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -176,10 +168,7 @@ export class SortingVisualizer extends React.Component {
     }
 
     bubbleSort() {
-        console.log(this.state.array);
-        const animations = getBubbleSortAnimations(this.state.array)
-        console.log(this.state.array);
-        console.log(animations);
+        const animations = getBubbleSortAnimations(this.state.array);
 
         for(let i=0;i<animations.length;i++) {
             const animation = animations[i];
