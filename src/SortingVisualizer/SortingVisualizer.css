@@ -26,12 +26,13 @@ button {
     position: relative;
     margin: 0 4%;
     background-color: transparent;
-    color: aliceblue;
+    color: rgb(255, 196, 0);
     border-color: transparent;
     height: 100%;
     border-radius: 3px;
 }
 
 button:hover {
-    background-color: rgb(51, 51, 51);
+    background-color: rgb(255, 196, 0);
+    color: rgb(24, 24, 24);
 }
