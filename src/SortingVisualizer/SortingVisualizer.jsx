@@ -5,6 +5,9 @@ import { getInsertionSortAnimations } from "../SortingAlgorithms/InsertionSort";
 import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 import { getHeapSortAnimations } from "../SortingAlgorithms/HeapSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/QuickSort";
+
+const ARRAY_SIZE = 100;
+
 export class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +23,7 @@ export class SortingVisualizer extends React.Component {
 
     resetArray() {
         const array = [];
-        for(let i=0;i<150;i++) {
+        for(let i=0;i<ARRAY_SIZE;i++) {
             array.push(i+200);
         }
         shuffleArray(array);
@@ -59,9 +62,40 @@ export class SortingVisualizer extends React.Component {
     }
 
     quickSort() {
-        const animations = getQuickSortAnimations(this.state.array);
+        const animations = getQuickSortAnimations(this.state.array)
+        console.log(this.state.array);
+        console.log(animations);
+
         for(let i=0;i<animations.length;i++) {
-            // perform animations
+            const animation = animations[i];
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const isColorChange = (i%3 !== 2);  
+            if(isColorChange) {
+                const barOneIdx = animation[0];
+                const barTwoIdx = animation[1];
+                const barOneStyle = arrayBars[barOneIdx].style;
+                const barTwoStyle = arrayBars[barTwoIdx].style;
+                const color = (i%3 === 0 ? 'red' : 'blue');
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color;
+                }, (i*2));
+                
+            } else {
+                const barOneNewHeight = animation[1];
+                const barOneIdx = animation[0];
+                
+                const barTwoNewHeight = animation[3];
+                const barTwoIdx = animation[2];
+                
+                const barOneStyle = arrayBars[barOneIdx].style;
+                const barTwoStyle = arrayBars[barTwoIdx].style;
+
+                setTimeout(() => {
+                    barOneStyle.height = `${barOneNewHeight}px`
+                    barTwoStyle.height = `${barTwoNewHeight}px`
+                }, (i*2));
+            }
         }
     }
 
@@ -153,23 +187,41 @@ export class SortingVisualizer extends React.Component {
 
     render() {
         const {array} = this.state;
+        
+        // const changeArraySize,() => {
+        //     const comp = document.getElementById('array-size-drop-down');
+        //     ARRAY_SIZE = comp.value;
+        //     this.setState(ARRAY_SIZE);
+        // }
 
         return (
-            <div className='array-container'>
-                {array.map((value, idx) =>(
-                    <div 
-                    className='array-bar' 
-                    key={idx}
-                    style={{height: `${value}px`}}></div>
-                ))}
-                <div className='sort-buttons'>
-                    <button onClick={() => {this.resetArray()}}>Generate New Button</button>
+            <div className='window'>
+                <nav className='sort-buttons'>
+                    <button onClick={() => {this.resetArray()}}>Generate New Bars</button>
                     <button onClick={() => {this.mergeSort()}}>Merge Sort</button>
                     <button onClick={() => {this.quickSort()}}>Quick Sort</button>
                     <button onClick={() => {this.heapSort()}}>Heap Sort</button>
                     <button onClick={() => {this.insertionSort()}}>Insertion Sort</button>
                     <button onClick={() => {this.bubbleSort()}}>Bubble Sort</button>
+                    <select id='array-size-drop-down'>
+                        <label>SIZE</label>
+                        <option value='5'>5</option>
+                        <option value='10'>10</option>
+                        <option value='20'>20</option>
+                        <option value='50'>50</option>
+                        <option value='100'>100</option>
+                        <option value='200'>200</option>
+                    </select>
+                </nav>
+                <div className='array-bar-container'>
+                    {array.map((value, idx) =>(
+                        <div 
+                        className='array-bar' 
+                        key={idx}
+                        style={{height: `${value}px`}}></div>
+                    ))}
                 </div>
+                
             </div>
         );
     }
