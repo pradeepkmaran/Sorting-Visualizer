@@ -14,7 +14,8 @@ export class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
-        }
+            selectedSort: null,
+        };
     }
 
     componentDidMount() {
@@ -27,7 +28,7 @@ export class SortingVisualizer extends React.Component {
             array.push(i + 200);
         }
         shuffleArray(array);
-        this.setState({ array });
+        this.setState({ array, selectedSort: null });
     }
 
     animateSorting(animations) {
@@ -83,19 +84,68 @@ export class SortingVisualizer extends React.Component {
         this.animateSorting(animations);
     }
 
+    handleSortChange(event) {
+        const { value } = event.target;
+        this.setState({ selectedSort: value });
+    }
+
+    handleSort() {
+        switch (this.state.selectedSort) {
+            case 'mergeSort':
+                this.mergeSort();
+                break;
+            case 'quickSort':
+                this.quickSort();
+                break;
+            case 'heapSort':
+                this.heapSort();
+                break;
+            case 'insertionSort':
+                this.insertionSort();
+                break;
+            case 'bubbleSort':
+                this.bubbleSort();
+                break;
+            default:
+                break;
+        }
+    }
+
     render() {
-        const { array } = this.state;
+        const { array, selectedSort } = this.state;
 
         return (
             <div className='window'>
                 <nav className='sort-buttons'>
-                    <button onClick={() => this.resetArray()}>Generate New Bars</button>
-                    <button onClick={() => this.mergeSort()}>Merge Sort</button>
-                    <button onClick={() => this.quickSort()}>Quick Sort</button>
-                    <button onClick={() => this.heapSort()}>Heap Sort</button>
-                    <button onClick={() => this.insertionSort()}>Insertion Sort</button>
-                    <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+                    <div className='sort-options' onChange={(event) => this.handleSortChange(event)}>
+                        <div className='sort-option'>
+                            <input type="radio" id="mergeSort" name="sort" value="mergeSort" checked={selectedSort === 'mergeSort'} />
+                            <label htmlFor="mergeSort">Merge Sort</label>
+                        </div>
+                        <div className='sort-option'>
+                            <input type="radio" id="quickSort" name="sort" value="quickSort" checked={selectedSort === 'quickSort'} />
+                            <label htmlFor="quickSort">Quick Sort</label>
+                        </div>
+                        <div className='sort-option'>
+                            <input type="radio" id="heapSort" name="sort" value="heapSort" checked={selectedSort === 'heapSort'} />
+                            <label htmlFor="heapSort">Heap Sort</label>
+                        </div>
+                        <div className='sort-option'>
+                            <input type="radio" id="insertionSort" name="sort" value="insertionSort" checked={selectedSort === 'insertionSort'} />
+                            <label htmlFor="insertionSort">Insertion Sort</label>
+                        </div>
+                        <div className='sort-option'>
+                            <input type="radio" id="bubbleSort" name="sort" value="bubbleSort" checked={selectedSort === 'bubbleSort'} />
+                            <label htmlFor="bubbleSort">Bubble Sort</label>
+                        </div>
+                    </div>
                 </nav>
+                
+                <div className='action-buttons'>
+                    <button className='generate-new-bars-btn' onClick={() => this.resetArray()}>Generate New Bars</button>
+                    <button className='sort-btn' onClick={() => this.handleSort()} disabled={!selectedSort}>Sort</button>
+                </div>
+
                 <div className='array-bar-container'>
                     {array.map((value, idx) => (
                         <div
