@@ -5,7 +5,7 @@ import { getInsertionSortAnimations } from "../SortingAlgorithms/InsertionSort";
 import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 import { getHeapSortAnimations } from "../SortingAlgorithms/HeapSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/QuickSort";
-
+import { FaBars, FaTimes } from "react-icons/fa";
 const ARRAY_SIZE = 150;
 
 export class SortingVisualizer extends React.Component {
@@ -14,7 +14,8 @@ export class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
-            selectedSort: null,
+            selectedSort: 'Select a sort from menu',
+            showMenu: false,
         };
     }
 
@@ -28,7 +29,7 @@ export class SortingVisualizer extends React.Component {
             array.push(i + 200);
         }
         shuffleArray(array);
-        this.setState({ array, selectedSort: null });
+        this.setState({ array, selectedSort: 'Select a sort from menu' });
     }
 
     animateSorting(animations) {
@@ -86,7 +87,7 @@ export class SortingVisualizer extends React.Component {
 
     handleSortChange(event) {
         const { value } = event.target;
-        this.setState({ selectedSort: value });
+        this.setState({ selectedSort: value,  showMenu: false});
     }
 
     handleSort() {
@@ -111,12 +112,31 @@ export class SortingVisualizer extends React.Component {
         }
     }
 
+    toggleMenu = () => {
+        this.setState(prevState => ({ showMenu: !prevState.showMenu }));
+    }
+
     render() {
-        const { array, selectedSort } = this.state;
+        const { array, selectedSort, showMenu } = this.state;
 
         return (
             <div className='window'>
-                <nav className='sort-buttons'>
+
+                <header>
+                    <nav>
+                        <button className='open-menu-btn' onClick={this.toggleMenu}>
+                            <FaBars />
+                        </button>
+                        <h1 className='app-name'>
+                            Sorting Visualizer Pro
+                        </h1>
+                    </nav>
+                </header>
+
+                {showMenu && <div className="sliding-menu-bar">
+                    <button className='close-menu-btn' onClick={this.toggleMenu}>
+                        <FaTimes />
+                    </button>
                     <div className='sort-options' onChange={(event) => this.handleSortChange(event)}>
                         <div className='sort-option'>
                             <input type="radio" id="mergeSort" name="sort" value="mergeSort" checked={selectedSort === 'mergeSort'} />
@@ -139,8 +159,11 @@ export class SortingVisualizer extends React.Component {
                             <label htmlFor="bubbleSort">Bubble Sort</label>
                         </div>
                     </div>
-                </nav>
+                </div> }
                 
+                <div className='selected-sort-display'>
+                    {selectedSort}
+                </div>
                 <div className='action-buttons'>
                     <button className='generate-new-bars-btn' onClick={() => this.resetArray()}>Generate New Bars</button>
                     <button className='sort-btn' onClick={() => this.handleSort()} disabled={!selectedSort}>Sort</button>
