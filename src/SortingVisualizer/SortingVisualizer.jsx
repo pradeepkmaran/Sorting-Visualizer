@@ -49,7 +49,7 @@ export class SortingVisualizer extends React.Component {
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
-                }, i * (21 - this.state.sortingSpeed));
+                }, i * 300 / this.state.sortingSpeed ** 2.3);
             } else {
                 const [barOneIdx, barOneNewHeight, barTwoIdx, barTwoNewHeight] = animation;
                 const barOneStyle = arrayBars[barOneIdx].style;
@@ -59,7 +59,7 @@ export class SortingVisualizer extends React.Component {
                         const barTwoStyle = arrayBars[barTwoIdx].style;
                         barTwoStyle.height = `${barTwoNewHeight}px`;
                     }
-                }, i * (21 - this.state.sortingSpeed));
+                }, i * 300 / this.state.sortingSpeed ** 2.3);
             }
         }
     }
