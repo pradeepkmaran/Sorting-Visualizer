@@ -7,7 +7,7 @@ import { getHeapSortAnimations } from "../SortingAlgorithms/HeapSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/QuickSort";
 import { FaBars, FaTimes, FaPlay, FaPause } from "react-icons/fa";
 import { MdShuffle } from "react-icons/md";
-const ARRAY_SIZE = 150;
+import ReactSlider from "react-slider";
 
 export class SortingVisualizer extends React.Component {
     constructor(props) {
@@ -15,9 +15,11 @@ export class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
+            arraySize: 150,
+            sortingSpeed: 15,
             selectedSort: 'Select a sort from menu',
             showMenu: false,
-            playBtn: true
+            playBtn: true,
         };
     }
 
@@ -27,11 +29,11 @@ export class SortingVisualizer extends React.Component {
 
     resetArray() {
         const array = [];
-        for (let i = 0; i < ARRAY_SIZE; i++) {
+        for (let i = 0; i < this.state.arraySize; i++) {
             array.push(i + 200);
         }
         shuffleArray(array);
-        this.setState({ array, selectedSort: 'Select a sort from menu' });
+        this.setState({ array });
     }
 
     animateSorting(animations) {
@@ -47,7 +49,7 @@ export class SortingVisualizer extends React.Component {
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
-                }, i * 2);
+                }, i * (21 - this.state.sortingSpeed));
             } else {
                 const [barOneIdx, barOneNewHeight, barTwoIdx, barTwoNewHeight] = animation;
                 const barOneStyle = arrayBars[barOneIdx].style;
@@ -57,7 +59,7 @@ export class SortingVisualizer extends React.Component {
                         const barTwoStyle = arrayBars[barTwoIdx].style;
                         barTwoStyle.height = `${barTwoNewHeight}px`;
                     }
-                }, i * 2);
+                }, i * (21 - this.state.sortingSpeed));
             }
         }
     }
@@ -89,7 +91,7 @@ export class SortingVisualizer extends React.Component {
 
     handleSortChange(event) {
         const { value } = event.target;
-        this.setState({ selectedSort: value,  showMenu: false});
+        this.setState({ selectedSort: value, showMenu: false });
     }
 
     handleSort() {
@@ -119,11 +121,19 @@ export class SortingVisualizer extends React.Component {
     }
 
     togglePlayBtn = () => {
-        this.setState(prevState => ({playBtn: !prevState.playBtn }));
+        this.setState(prevState => ({ playBtn: !prevState.playBtn }));
+    }
+
+    handleArraySizeChange = (value) => {
+        this.setState({ arraySize: value }, () => this.resetArray());
+    }
+
+    handleSortingSpeedChange = (value) => {
+        this.setState({ sortingSpeed: value });
     }
 
     render() {
-        const { array, selectedSort, showMenu } = this.state;
+        const { array, arraySize, sortingSpeed, selectedSort, showMenu } = this.state;
 
         return (
             <div className='window'>
@@ -165,7 +175,7 @@ export class SortingVisualizer extends React.Component {
                             <label htmlFor="bubbleSort">Bubble Sort</label>
                         </div>
                     </div>
-                </div> }
+                </div>}
 
                 <div className="display-container">
                     <div className='selected-sort-display'>
@@ -173,7 +183,35 @@ export class SortingVisualizer extends React.Component {
                     </div>
                     <div className='action-btns'>
                         <button className='generate-new-bars-btn' onClick={() => this.resetArray()}> <MdShuffle className="shuffle-icon" /> <h2>Shuffle</h2> </button>
-                        <button className='sort-play-btn' onClick={() => this.handleSort()} disabled={!selectedSort}> <FaPlay className="play-icon"/> <h2>Sort</h2> </button>
+                        <button className='sort-play-btn' onClick={() => this.handleSort()} disabled={!selectedSort}> <FaPlay className="play-icon" /> <h2>Sort</h2> </button>
+                    </div>
+                    <div className="sliders-container">
+                        <div className="slider">
+                            <label>Array Size: {arraySize}</label>
+                            <ReactSlider
+                                className="horizontal-slider"
+                                thumbClassName="example-thumb"
+                                trackClassName="example-track"
+                                value={arraySize}
+                                onChange={this.handleArraySizeChange}
+                                min={10}
+                                max={200}
+                                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+                            />
+                        </div>
+                        <div className="slider">
+                            <label>Sorting Speed: x{sortingSpeed}</label>
+                            <ReactSlider
+                                className="horizontal-slider"
+                                thumbClassName="example-thumb"
+                                trackClassName="example-track"
+                                value={sortingSpeed}
+                                onChange={this.handleSortingSpeedChange}
+                                min={1}
+                                max={20}
+                                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+                            />
+                        </div>
                     </div>
                 </div>
 
