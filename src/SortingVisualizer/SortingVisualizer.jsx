@@ -5,7 +5,7 @@ import { getInsertionSortAnimations } from "../SortingAlgorithms/InsertionSort";
 import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 import { getHeapSortAnimations } from "../SortingAlgorithms/HeapSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/QuickSort";
-import { FaBars, FaTimes, FaPlay, FaPause } from "react-icons/fa";
+import { FaBars, FaTimes, FaPlay } from "react-icons/fa";
 import { MdShuffle } from "react-icons/md";
 import ReactSlider from "react-slider";
 
@@ -15,11 +15,10 @@ export class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
-            arraySize: 150,
-            sortingSpeed: 15,
+            arraySize: 120,
+            sortingSpeed: 5,
             selectedSort: 'Select a sort from menu',
             showMenu: false,
-            playBtn: true,
         };
     }
 
@@ -29,8 +28,11 @@ export class SortingVisualizer extends React.Component {
 
     resetArray() {
         const array = [];
-        for (let i = 0; i < this.state.arraySize; i++) {
-            array.push(i + 200);
+        let diff = this.state.arraySize
+        let tot = 400;
+        let each = tot / diff;
+        for (let i = 1; i <= this.state.arraySize; i++) {
+            array.push(i * each);
         }
         shuffleArray(array);
         this.setState({ array });
@@ -120,10 +122,6 @@ export class SortingVisualizer extends React.Component {
         this.setState(prevState => ({ showMenu: !prevState.showMenu }));
     }
 
-    togglePlayBtn = () => {
-        this.setState(prevState => ({ playBtn: !prevState.playBtn }));
-    }
-
     handleArraySizeChange = (value) => {
         this.setState({ arraySize: value }, () => this.resetArray());
     }
@@ -144,7 +142,7 @@ export class SortingVisualizer extends React.Component {
                             <FaBars />
                         </button>
                         <h1 className='app-name'>
-                            Sorting Visualizer Pro
+                            Pradeep's Sorting Visualizer Pro
                         </h1>
                     </nav>
                 </header>
@@ -183,15 +181,22 @@ export class SortingVisualizer extends React.Component {
                     </div>
                     <div className='action-btns'>
                         <button className='generate-new-bars-btn' onClick={() => this.resetArray()}> <MdShuffle className="shuffle-icon" /> <h2>Shuffle</h2> </button>
-                        <button className='sort-play-btn' onClick={() => this.handleSort()} disabled={!selectedSort}> <FaPlay className="play-icon" /> <h2>Sort</h2> </button>
+                        <button 
+                            className="sort-play-btn"
+                            onClick={() => this.handleSort()}
+                            disabled={selectedSort === "Select a sort from menu"}
+                            >
+                            <FaPlay className="play-icon" />
+                            <h2>Sort</h2>
+                        </button>
                     </div>
                     <div className="sliders-container">
                         <div className="slider">
                             <label>Array Size: {arraySize}</label>
                             <ReactSlider
                                 className="horizontal-slider"
-                                thumbClassName="example-thumb"
-                                trackClassName="example-track"
+                                thumbClassName="slider-thumb"
+                                trackClassName="slider-track"
                                 value={arraySize}
                                 onChange={this.handleArraySizeChange}
                                 min={10}
@@ -203,8 +208,8 @@ export class SortingVisualizer extends React.Component {
                             <label>Sorting Speed: x{sortingSpeed}</label>
                             <ReactSlider
                                 className="horizontal-slider"
-                                thumbClassName="example-thumb"
-                                trackClassName="example-track"
+                                thumbClassName="slider-thumb"
+                                trackClassName="slider-track"
                                 value={sortingSpeed}
                                 onChange={this.handleSortingSpeedChange}
                                 min={1}
