@@ -1,10 +1,10 @@
 import React from "react";
 import './SortingVisualizer.css';
 import { getMergeSortAnimations, mergeSortAlgo, mergeSortDef,  mergeSortTC } from "../SortingAlgorithms/MergeSort";
-import { getInsertionSortAnimations } from "../SortingAlgorithms/InsertionSort";
-import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
-import { getHeapSortAnimations } from "../SortingAlgorithms/HeapSort";
-import { getQuickSortAnimations } from "../SortingAlgorithms/QuickSort";
+import { getQuickSortAnimations, quickSortAlgo, quickSortDef, quickSortTC } from "../SortingAlgorithms/QuickSort";
+import { getInsertionSortAnimations, insertionSortAlgo, insertionSortDef, insertionSortTC } from "../SortingAlgorithms/InsertionSort";
+import { bubbleSortAlgo, bubbleSortDef, bubbleSortTC, getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
+import { getHeapSortAnimations, heapSortAlgo, heapSortDef, heapSortTC } from "../SortingAlgorithms/HeapSort";
 import { FaBars, FaTimes, FaPlay, FaInfo } from "react-icons/fa";
 import { MdShuffle } from "react-icons/md";
 import { TiInfoLarge } from "react-icons/ti";
@@ -102,12 +102,48 @@ export class SortingVisualizer extends React.Component {
     handleSortChange(event) {
         const { value } = event.target;
         this.setState({ selectedSort: value, showMenu: false });
-        this.setState({
-            sortAlgoType: "Merge Sort",
-            sortAlgoDef: mergeSortDef(),
-            sortAlgoTC: mergeSortTC(),
-            sortAlgoCode: mergeSortAlgo(),
-        })
+       switch (value) {
+            case "Merge Sort" :
+                this.setState({
+                    sortAlgoType: "Merge Sort",
+                    sortAlgoDef: mergeSortDef(),
+                    sortAlgoTC: mergeSortTC(),
+                    sortAlgoCode: mergeSortAlgo(),
+                });
+                break;
+            case "Quick Sort":
+                this.setState({
+                    sortAlgoType: "Quick Sort",
+                    sortAlgoDef: quickSortDef(),
+                    sortAlgoTC: quickSortTC(),
+                    sortAlgoCode: quickSortAlgo(),
+                });
+                break;
+            case "Heap Sort":
+                this.setState({
+                    sortAlgoType: "Heap Sort",
+                    sortAlgoDef: heapSortDef(),
+                    sortAlgoTC: heapSortTC(),
+                    sortAlgoCode: heapSortAlgo(),
+                });
+                break;
+            case "Insertion Sort":
+                this.setState({
+                    sortAlgoType: "Insertion Sort",
+                    sortAlgoDef: insertionSortDef(),
+                    sortAlgoTC: insertionSortTC(),
+                    sortAlgoCode: insertionSortAlgo(),
+                });
+                break;
+            case "Bubble Sort":
+                this.setState({
+                    sortAlgoType: "Bubble Sort",
+                    sortAlgoDef: bubbleSortDef(),
+                    sortAlgoTC: bubbleSortTC(),
+                    sortAlgoCode: bubbleSortAlgo(),
+                });
+                break;
+       }
     }
 
     handleSort() {

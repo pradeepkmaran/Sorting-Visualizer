@@ -53,3 +53,45 @@ function performHeapSort(array, animations) {
         heapify(array, i, 0, animations);
     }
 }
+
+export const heapSortAlgo = () => {
+    return `function heapSort(array)
+    n = length of array
+
+    // Build max heap
+    for i = n/2 - 1 downto 0
+        heapify(array, n, i)
+
+    // Extract elements from heap
+    for i = n-1 downto 0
+        swap(array[0], array[i]) // Move current root to end
+        heapify(array, i, 0) // Call max heapify on the reduced heap
+
+function heapify(array, n, i)
+    largest = i // Initialize largest as root
+    left = 2*i + 1 // Left child
+    right = 2*i + 2 // Right child
+
+    // If left child is larger than root
+    if left < n and array[left] > array[largest]
+        largest = left
+
+    // If right child is larger than largest so far
+    if right < n and array[right] > array[largest]
+        largest = right
+
+    // If largest is not root
+    if largest != i
+        swap(array[i], array[largest])
+
+        // Recursively heapify the affected sub-tree
+        heapify(array, n, largest)`;
+}
+
+export const heapSortDef = () => {
+    return `Heap Sort is an efficient, comparison-based, in-place sorting algorithm that leverages a binary heap data structure. It works by first building a max heap from the input array, and then repeatedly extracting the maximum element from the heap and rebuilding the heap. The process continues until all elements are sorted. Heap Sort is particularly notable for its performance with large datasets and its worst-case time complexity, which is consistently O(n log n). However, it is not a stable sort, meaning it does not necessarily preserve the relative order of equal elements.`;
+}
+
+export const heapSortTC = () => {
+    return "O(n log n)";
+}

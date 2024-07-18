@@ -28,3 +28,20 @@ function performBubbleSort(array, animations) {
         }
     }
 }
+
+export const bubbleSortAlgo = () => {
+    return `function bubbleSort(array)
+    n = length of array
+    for i = 0 to n - 1
+        for j = 0 to n - i - 2
+            if array[j] > array[j + 1]
+                swap(array[j], array[j + 1])`;
+}
+
+export const bubbleSortDef = () => {
+    return `Bubble Sort is a simple, comparison-based sorting algorithm. It works by repeatedly stepping through the list, comparing adjacent elements and swapping them if they are in the wrong order. The process is repeated until the list is sorted. Bubble Sort is known for its simplicity but is inefficient for large datasets, with an average and worst-case time complexity of O(n^2). It is a stable sort, meaning it preserves the relative order of equal elements.`;
+}
+
+export const bubbleSortTC = () => {
+    return "O(n^2)";
+}

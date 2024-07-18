@@ -186,10 +186,19 @@ input[type="radio"] + label:hover {
     color: #eee;
     max-width: 80%; 
     margin: 0 auto;
-    text-align:justify;
+}
+
+.info-type,
+.info-tc {
+    text-align: right;
+}
+
+.info-def{
+    text-align: justify;
 }
 
 .code-container {
+    min-height: 40%;
     color: rgb(15, 15, 15);
     background-color: #f4f4f4;
     padding: 10px;
@@ -384,11 +393,20 @@ input[type="radio"] + label:hover {
     
     .sliding-info-bar {
         width: 100%;
+        overflow-x: hidden;
     }
 
     .sliders-container {
         display: flexbox;
         flex-direction: column;
+    }
+
+    .code-container {
+        overflow-x: scroll;
+    }
+
+    .python-code {
+        padding-right: 50px;
     }
 
     .slider {
