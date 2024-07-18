@@ -1,12 +1,13 @@
 import React from "react";
 import './SortingVisualizer.css';
-import { getMergeSortAnimations } from "../SortingAlgorithms/MergeSort";
+import { getMergeSortAnimations, mergeSortAlgo, mergeSortDef,  mergeSortTC } from "../SortingAlgorithms/MergeSort";
 import { getInsertionSortAnimations } from "../SortingAlgorithms/InsertionSort";
 import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 import { getHeapSortAnimations } from "../SortingAlgorithms/HeapSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/QuickSort";
-import { FaBars, FaTimes, FaPlay } from "react-icons/fa";
+import { FaBars, FaTimes, FaPlay, FaInfo } from "react-icons/fa";
 import { MdShuffle } from "react-icons/md";
+import { TiInfoLarge } from "react-icons/ti";
 import ReactSlider from "react-slider";
 
 export class SortingVisualizer extends React.Component {
@@ -19,6 +20,13 @@ export class SortingVisualizer extends React.Component {
             sortingSpeed: 5,
             selectedSort: 'Select a sort from menu',
             showMenu: false,
+            infoMenu: false,
+            welcomeMsg: "Welcome to my sort visualizer :)",
+            exploreMsg: "Explore different sorting algorithms from the menu",
+            sortAlgoType: "",
+            sortAlgoDef: "",
+            sortAlgoTC: "",
+            sortAlgoCode: "",
         };
     }
 
@@ -47,7 +55,7 @@ export class SortingVisualizer extends React.Component {
                 const [barOneIdx, barTwoIdx] = animation;
                 const barOneStyle = arrayBars[barOneIdx].style;
                 const barTwoStyle = arrayBars[barTwoIdx].style;
-                const color = (i % 3 === 0) ? 'red' : 'rgb(255, 196, 0)';
+                const color = (i % 3 === 0) ? 'red' : 'rgb(0, 0, 0)';
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
@@ -94,6 +102,12 @@ export class SortingVisualizer extends React.Component {
     handleSortChange(event) {
         const { value } = event.target;
         this.setState({ selectedSort: value, showMenu: false });
+        this.setState({
+            sortAlgoType: "Merge Sort",
+            sortAlgoDef: mergeSortDef(),
+            sortAlgoTC: mergeSortTC(),
+            sortAlgoCode: mergeSortAlgo(),
+        })
     }
 
     handleSort() {
@@ -122,6 +136,10 @@ export class SortingVisualizer extends React.Component {
         this.setState(prevState => ({ showMenu: !prevState.showMenu }));
     }
 
+    toggleInfo = () => {
+        this.setState(prevState => ({ infoMenu: !prevState.infoMenu}));
+    }
+
     handleArraySizeChange = (value) => {
         this.setState({ arraySize: value }, () => this.resetArray());
     }
@@ -142,8 +160,11 @@ export class SortingVisualizer extends React.Component {
                             <FaBars />
                         </button>
                         <h1 className='app-name'>
-                            Pradeep's Sorting Visualizer Pro
+                            Sorting Visualizer Pro
                         </h1>
+                        <button className='sort-info-btn' onClick={this.toggleInfo}>
+                            <TiInfoLarge className="info-icon"/>
+                        </button>
                     </nav>
                 </header>
 
@@ -175,6 +196,25 @@ export class SortingVisualizer extends React.Component {
                     </div>
                 </div>}
 
+                {this.state.infoMenu && (
+                <div className="sliding-info-bar">
+                    <button className='close-info-btn' onClick={this.toggleInfo}>
+                        <FaTimes />
+                    </button>
+                    <div className="info-container">
+                        <div className="info-type">{this.state.sortAlgoType}</div>
+                        <div className="info-tc">{this.state.sortAlgoTC}</div>
+                        <div className="info-def">{this.state.sortAlgoDef}</div>
+                        <div className="code-container">
+                            <pre className="python-code">
+                                {this.state.sortAlgoCode}
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+                )}
+
+
                 <div className="display-container">
                     <div className='selected-sort-display'>
                         {selectedSort}
@@ -201,7 +241,7 @@ export class SortingVisualizer extends React.Component {
                                 onChange={this.handleArraySizeChange}
                                 min={10}
                                 max={200}
-                                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+                                renderThumb={(props, state) => <div {...props}>{}</div>}
                             />
                         </div>
                         <div className="slider">
@@ -214,7 +254,7 @@ export class SortingVisualizer extends React.Component {
                                 onChange={this.handleSortingSpeedChange}
                                 min={1}
                                 max={20}
-                                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+                                renderThumb={(props, state) => <div {...props}>{}</div>}
                             />
                         </div>
                     </div>
@@ -229,6 +269,22 @@ export class SortingVisualizer extends React.Component {
                         </div>
                     ))}
                 </div>
+
+                <br></br><br></br>
+
+                <div className  ="text-content">
+                    <h1>
+                        {this.state.welcomeMsg}
+                    </h1>
+                    <p>
+                        {this.state.exploreMsg}
+                        {this.state.sortTimeComplexity}
+                    </p>
+                </div>
+
+                
+                <br></br><br></br>
+
             </div>
         );
     }

@@ -32,6 +32,49 @@ export const getMergeSortAnimations = (array) => {
     return animations;
 }
 
+export const mergeSortAlgo = () => {
+    return `function mergeSort(array)
+    if length of array <= 1
+        return array
+    
+    mid = length of array / 2
+    leftHalf = array[0...mid-1]
+    rightHalf = array[mid...end]
+    
+    leftSorted = mergeSort(leftHalf)
+    rightSorted = mergeSort(rightHalf)
+    
+    return merge(leftSorted, rightSorted)
+
+function merge(left, right)
+    result = empty array
+    while left is not empty and right is not empty
+        if left[0] <= right[0]
+            append left[0] to result
+            remove left[0] from left
+        else
+            append right[0] to result
+            remove right[0] from right
+    
+    while left is not empty
+        append left[0] to result
+        remove left[0] from left
+    
+    while right is not empty
+        append right[0] to result
+        remove right[0] from right
+    
+    return result`;
+}
+
+export const mergeSortDef = () => {
+    return `Merge Sort is a highly efficient, comparison-based, divide-and-conquer sorting algorithm. It works by recursively dividing an array into two halves, sorting each half independently, and then merging the sorted halves back together. The merging process ensures that the overall array remains sorted. Its faster than algorithms like Bubble Sort or Insertion Sort for large datasets. Additionally, Merge Sort is stable, meaning it preserves the relative order of equal elements, making it suitable for tasks that require stable sorting.`;
+}
+
+export const mergeSortTC = () => {
+    return "O(n log n)";
+}
+
 function performMergeSort(mainArray, startIdx, endIdx, auxArray, animations) {
     if (startIdx === endIdx) return;
     const midIdx = Math.floor((startIdx + endIdx) / 2);
