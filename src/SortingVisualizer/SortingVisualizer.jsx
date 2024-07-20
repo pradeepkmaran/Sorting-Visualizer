@@ -5,7 +5,7 @@ import { getQuickSortAnimations, quickSortAlgo, quickSortDef, quickSortTC } from
 import { getInsertionSortAnimations, insertionSortAlgo, insertionSortDef, insertionSortTC } from "../SortingAlgorithms/InsertionSort";
 import { bubbleSortAlgo, bubbleSortDef, bubbleSortTC, getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 import { getHeapSortAnimations, heapSortAlgo, heapSortDef, heapSortTC } from "../SortingAlgorithms/HeapSort";
-import { FaBars, FaTimes, FaPlay, FaInfo } from "react-icons/fa";
+import { FaBars, FaTimes, FaPlay } from "react-icons/fa";
 import { MdShuffle } from "react-icons/md";
 import { TiInfoLarge } from "react-icons/ti";
 import ReactSlider from "react-slider";
@@ -143,6 +143,8 @@ export class SortingVisualizer extends React.Component {
                     sortAlgoCode: bubbleSortAlgo(),
                 });
                 break;
+            default:
+                break;
        }
     }
 
@@ -198,7 +200,7 @@ export class SortingVisualizer extends React.Component {
                         <h1 className='app-name'>
                             Sorting Visualizer Pro
                         </h1>
-                        <button className='sort-info-btn' onClick={this.toggleInfo}>
+                        <button title={this.state.selectedSort} className='sort-info-btn' onClick={this.toggleInfo} disabled={selectedSort === "Select a sort from menu"}>
                             <TiInfoLarge className="info-icon"/>
                         </button>
                     </nav>
@@ -208,27 +210,41 @@ export class SortingVisualizer extends React.Component {
                     <button className='close-menu-btn' onClick={this.toggleMenu}>
                         <FaTimes />
                     </button>
+                        
                     <div className='sort-options' onChange={(event) => this.handleSortChange(event)}>
-                        <div className='sort-option'>
-                            <input type="radio" id="mergeSort" name="sort" value="Merge Sort" checked={selectedSort === 'Merge Sort'} />
-                            <label htmlFor="mergeSort">Merge Sort</label>
+                        <div className="sort-options-category">
+                            <div className="sort-options-category-title-container"> <h1 className="sort-options-category-title">Logarithmic</h1> </div>
+                            <div className='sort-option'>
+                                <input type="radio" id="mergeSort" name="sort" value="Merge Sort" checked={selectedSort === 'Merge Sort'} />
+                                <label htmlFor="mergeSort">Merge Sort</label>
+                            </div>
+                            <div className='sort-option'>
+                                <input type="radio" id="quickSort" name="sort" value="Quick Sort" checked={selectedSort === 'Quick Sort'} />
+                                <label htmlFor="quickSort">Quick Sort</label>
+                            </div>
+                            <div className='sort-option'>
+                                <input type="radio" id="heapSort" name="sort" value="Heap Sort" checked={selectedSort === 'Heap Sort'} />
+                                <label htmlFor="heapSort">Heap Sort</label>
+                            </div>
                         </div>
-                        <div className='sort-option'>
-                            <input type="radio" id="quickSort" name="sort" value="Quick Sort" checked={selectedSort === 'Quick Sort'} />
-                            <label htmlFor="quickSort">Quick Sort</label>
+                        <div className="sort-options-category">
+                            <div className="sort-options-category-title-container"> <h1 className="sort-options-category-title">Quadratic</h1> </div>    
+                            <div className='sort-option'>
+                                <input type="radio" id="insertionSort" name="sort" value="Insertion Sort" checked={selectedSort === 'Insertion Sort'} />
+                                <label htmlFor="insertionSort">Insertion Sort</label>
+                            </div>
+                            <div className='sort-option'>
+                                <input type="radio" id="bubbleSort" name="sort" value="Bubble Sort" checked={selectedSort === 'Bubble Sort'} />
+                                <label htmlFor="bubbleSort">Bubble Sort</label>
+                            </div>
                         </div>
-                        <div className='sort-option'>
-                            <input type="radio" id="heapSort" name="sort" value="Heap Sort" checked={selectedSort === 'Heap Sort'} />
-                            <label htmlFor="heapSort">Heap Sort</label>
+                        <div className="sort-options-category">
+                        <div className="sort-options-category-title-container"> <h1 className="sort-options-category-title">Weird</h1> </div>    
+                            <div className='sort-option'>
+                                <p className="adding-soon">Adding Soon..</p>
+                            </div>
                         </div>
-                        <div className='sort-option'>
-                            <input type="radio" id="insertionSort" name="sort" value="Insertion Sort" checked={selectedSort === 'Insertion Sort'} />
-                            <label htmlFor="insertionSort">Insertion Sort</label>
-                        </div>
-                        <div className='sort-option'>
-                            <input type="radio" id="bubbleSort" name="sort" value="Bubble Sort" checked={selectedSort === 'Bubble Sort'} />
-                            <label htmlFor="bubbleSort">Bubble Sort</label>
-                        </div>
+                        
                     </div>
                 </div>}
 
